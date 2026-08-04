@@ -1,0 +1,60 @@
+name: Build and Deploy Salon Sites
+
+# data/salons.json や templates/ を更新して push すると、自動で
+# 1) 未生成の店舗だけ Claude API でコピーを生成
+# 2) 全店舗の静的サイトをビルド
+# 3) GitHub Pages に公開
+# という流れが走る。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/**"
+      - "templates/**"
+      - "scripts/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Generate copy for any new salons
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 scripts/generate_copy.py
+
+      - name: Build sites
+        run: python3 scripts/build_sites.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
