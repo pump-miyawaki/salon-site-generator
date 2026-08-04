@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ name }}｜{{ area }}の美容室</title>
+<meta name="description" content="{{ area }}の美容室「{{ name }}」。{{ catch_copy }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F3EC;
+    --paper-deep:#EFE7D8;
+    --ink:#2B2622;
+    --ink-soft:#5B5148;
+    --accent:#A9613A;
+    --accent-deep:#7E4526;
+    --line:#DCD1BC;
+    --radius:2px;
+    --maxw:960px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Zen Kaku Gothic New", "Hiragino Sans", sans-serif;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,.serif{
+    font-family:"Shippori Mincho", serif;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  a{color:inherit;}
+
+  /* demo watermark banner */
+  .demo-banner{
+    background:var(--ink); color:var(--paper);
+    text-align:center; font-size:12.5px; letter-spacing:.08em;
+    padding:9px 12px;
+  }
+  .demo-banner b{color:var(--accent);}
+
+  /* hairline motif — used as the signature device throughout */
+  .hairline{width:100%; height:34px; display:block;}
+  .hairline path{
+    fill:none; stroke:var(--accent); stroke-width:1.4;
+    stroke-dasharray:600; stroke-dashoffset:600;
+    animation:draw 1.6s ease-out forwards;
+  }
+  @keyframes draw{to{stroke-dashoffset:0;}}
+  .rule{border:none; border-top:1px solid var(--line); margin:0;}
+
+  /* nav */
+  header.site{
+    padding:22px 0; border-bottom:1px solid var(--line);
+    position:sticky; top:0; background:rgba(247,243,236,.92);
+    backdrop-filter:blur(6px); z-index:10;
+  }
+  header.site .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .brand{font-family:"Shippori Mincho",serif; font-size:19px; font-weight:700;}
+  .brand span{display:block; font-family:"Zen Kaku Gothic New",sans-serif; font-size:10.5px; letter-spacing:.18em; color:var(--ink-soft); font-weight:400; margin-top:2px;}
+  nav.site a{
+    font-size:13.5px; letter-spacing:.05em; text-decoration:none;
+    padding:9px 16px; border:1px solid var(--ink); border-radius:var(--radius);
+    background:var(--ink); color:var(--paper); transition:opacity .2s;
+  }
+  nav.site a:hover{opacity:.82;}
+
+  /* hero */
+  .hero{padding:88px 0 64px;}
+  .eyebrow{
+    font-size:12px; letter-spacing:.22em; color:var(--accent-deep);
+    text-transform:uppercase; margin:0 0 18px;
+  }
+  .hero h1{font-size:clamp(32px,5.6vw,54px); margin:0 0 20px; line-height:1.35;}
+  .hero .catch{font-size:16.5px; color:var(--ink-soft); max-width:46ch; margin:0 0 34px;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px; font-size:14.5px; letter-spacing:.03em;
+    text-decoration:none; border-radius:var(--radius);
+    transition:transform .18s ease, opacity .18s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--accent); color:var(--paper);}
+  .btn-primary:hover{opacity:.9;}
+  .btn-outline{border:1px solid var(--ink); color:var(--ink);}
+  .btn-outline:hover{background:var(--ink); color:var(--paper);}
+
+  /* section shell */
+  section{padding:58px 0;}
+  .section-head{margin-bottom:34px;}
+  .section-head .eyebrow{margin-bottom:10px;}
+  .section-head h2{font-size:26px; margin:0;}
+
+  /* about */
+  .about-grid{display:grid; grid-template-columns:1.3fr .9fr; gap:48px; align-items:start;}
+  .about-grid p{color:var(--ink-soft); font-size:15.5px;}
+  .trust-card{
+    background:var(--paper-deep); border:1px solid var(--line);
+    padding:26px; border-radius:var(--radius);
+  }
+  .trust-card .score{font-family:"Shippori Mincho",serif; font-size:40px; font-weight:700; line-height:1;}
+  .trust-card .score small{font-size:15px; font-weight:400; margin-left:4px; color:var(--ink-soft);}
+  .trust-card .meta{font-size:12.5px; color:var(--ink-soft); margin-top:6px; letter-spacing:.03em;}
+  .trust-card .specialty{
+    margin-top:18px; padding-top:18px; border-top:1px solid var(--line);
+    font-size:13.5px; color:var(--ink-soft);
+  }
+  .trust-card .specialty b{display:block; color:var(--ink); font-size:14px; margin-bottom:4px; font-weight:500;}
+
+  /* features */
+  .features{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  .feature h3{font-size:16px; font-weight:500; margin:0 0 8px; font-family:"Zen Kaku Gothic New",sans-serif;}
+  .feature p{font-size:14px; color:var(--ink-soft); margin:0;}
+  .feature .mark{color:var(--accent); font-family:"Shippori Mincho",serif; font-size:22px; display:block; margin-bottom:10px;}
+
+  /* access */
+  .access-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px;}
+  table.hours{width:100%; border-collapse:collapse; font-size:14.5px;}
+  table.hours td{padding:9px 0; border-bottom:1px solid var(--line);}
+  table.hours td:first-child{color:var(--ink-soft); width:54px;}
+  .info-line{font-size:14.5px; margin:0 0 12px; display:flex; gap:10px;}
+  .info-line .label{color:var(--ink-soft); width:64px; flex:none; font-size:12.5px; letter-spacing:.05em; padding-top:2px;}
+  .tel-link{color:var(--accent-deep); font-weight:500; text-decoration:none; border-bottom:1px solid var(--accent);}
+
+  /* footer cta */
+  footer.cta{background:var(--ink); color:var(--paper); padding:60px 0 44px; text-align:center;}
+  footer.cta h2{color:var(--paper); font-size:24px; margin:0 0 10px;}
+  footer.cta p{color:#CBC2B4; font-size:14px; margin:0 0 28px;}
+  footer.cta .btn-primary{background:var(--accent);}
+  footer .fineprint{margin-top:40px; font-size:11.5px; color:#8A8175; letter-spacing:.03em;}
+
+  @media (max-width:760px){
+    .about-grid, .access-grid{grid-template-columns:1fr; gap:32px;}
+    .features{grid-template-columns:1fr; gap:26px;}
+    nav.site a{padding:8px 12px; font-size:12.5px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hairline path{animation:none; stroke-dashoffset:0;}
+    html{scroll-behavior:auto;}
+  }
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+</style>
+</head>
+<body>
+
+{% if is_demo %}
+<div class="demo-banner">これは <b>ご提案用のサンプルページ</b> です（{{ name }} 様｜制作: {{ studio_name }}）</div>
+{% endif %}
+
+<header class="site">
+  <div class="wrap">
+    <div class="brand">{{ name }}<span>{{ area }} / 美容室</span></div>
+    <nav class="site"><a href="tel:{{ phone_raw }}">{{ phone }}</a></nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">{{ area }} ・ {{ specialty }}</p>
+    <h1>{{ name }}</h1>
+    <p class="catch">{{ catch_copy }}</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="tel:{{ phone_raw }}">電話で予約する</a>
+      <a class="btn btn-outline" href="{{ maps_url }}" target="_blank" rel="noopener">Google マップで見る</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><svg class="hairline" viewBox="0 0 960 34" preserveAspectRatio="none"><path d="M0,17 C160,2 220,32 380,17 C540,2 600,32 760,17 C860,6 900,26 960,17"/></svg></div>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <div class="section-head">
+        <p class="eyebrow">About</p>
+        <h2>お店について</h2>
+      </div>
+      <p>{{ about_text }}</p>
+    </div>
+    <div class="trust-card reveal">
+      {% if rating %}
+      <div class="score">{{ rating }}<small>/ 5.0</small></div>
+      <div class="meta">Google 口コミ {{ rating_count }}件の評価</div>
+      {% else %}
+      <div class="score" style="font-size:20px;">口コミ受付中</div>
+      <div class="meta">新規開業・地域の皆様にご案内中</div>
+      {% endif %}
+      <div class="specialty">
+        <b>得意なこと</b>
+        {{ specialty }}
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="features">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Point</p>
+      <h2>選ばれる理由</h2>
+    </div>
+    <div class="features">
+      {% for f in features %}
+      <div class="feature reveal">
+        <span class="mark">{{ f.tag }}</span>
+        <h3>{{ f.title }}</h3>
+        <p>{{ f.desc }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section id="access">
+  <div class="wrap access-grid">
+    <div class="reveal">
+      <div class="section-head">
+        <p class="eyebrow">Access</p>
+        <h2>アクセス・営業時間</h2>
+      </div>
+      <div class="info-line"><span class="label">住所</span><span>{{ address }}</span></div>
+      <div class="info-line"><span class="label">電話</span><a class="tel-link" href="tel:{{ phone_raw }}">{{ phone }}</a></div>
+      <div class="info-line"><span class="label">地図</span><a class="tel-link" href="{{ maps_url }}" target="_blank" rel="noopener">Google マップで開く</a></div>
+    </div>
+    <table class="hours reveal">
+      {% for day, time in hours %}
+      <tr><td>{{ day }}</td><td>{{ time }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</section>
+
+<footer class="cta">
+  <div class="wrap">
+    <h2>ご予約・お問い合わせ</h2>
+    <p>{{ cta_text }}</p>
+    <a class="btn btn-primary" href="tel:{{ phone_raw }}">{{ phone }} に電話する</a>
+    <p class="fineprint">
+      {% if is_demo %}
+      本ページは {{ studio_name }} が {{ name }} 様への提案用に作成したサンプルです。掲載情報は公開されている店舗情報をもとに作成しています。内容の修正・公開のご希望があればお気軽にご連絡ください。
+      {% else %}
+      © {{ year }} {{ name }}
+      {% endif %}
+    </p>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
